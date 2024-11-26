@@ -1,0 +1,123 @@
+spring:
+  application:
+    name: generic-mapper
+
+
+
+
+
+database:
+  tables:
+    users: |
+      {
+        "fields": [
+          {
+            "name": "id",
+            "type": "long",
+            "required": true,
+            "autoIncrement": true
+          },
+          {
+            "name": "username",
+            "type": "string",
+            "required": true,
+            "validation": {
+              "minLength": 3,
+              "maxLength": 50,
+              "pattern": "^[a-zA-Z0-9_]+$"
+            }
+          },
+          {
+            "name": "email",
+            "type": "string",
+            "required": true,
+            "validation": {
+              "pattern": "^[A-Za-z0-9+_.-]+@(.+)$"
+            }
+          },
+          {
+            "name": "age",
+            "type": "integer",
+            "required": false,
+            "validation": {
+              "min": 18,
+              "max": 120
+            }
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "required": true,
+            "defaultValue": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "required": true,
+            "defaultValue": "CURRENT_TIMESTAMP"
+          }
+        ],
+        "primaryKeys": ["id"],
+        "validations": {
+          "age_check": "age >= 18"
+        }
+      }
+    products: |
+      {
+        "fields": [
+          {
+            "name": "id",
+            "type": "long",
+            "required": true,
+            "autoIncrement": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "validation": {
+              "minLength": 2,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "price",
+            "type": "decimal",
+            "required": true,
+            "validation": {
+              "min": 0.01
+            }
+          },
+          {
+            "name": "stock",
+            "type": "integer",
+            "required": true,
+            "defaultValue": 0,
+            "validation": {
+              "min": 0
+            }
+          },
+          {
+            "name": "category",
+            "type": "string",
+            "required": true,
+            "validation": {
+              "enum": ["ELECTRONICS", "CLOTHING", "BOOKS", "FOOD"]
+            }
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "defaultValue": "ACTIVE",
+            "validation": {
+              "enum": ["ACTIVE", "INACTIVE", "DISCONTINUED"]
+            }
+          }
+        ],
+        "primaryKeys": ["id"],
+        "validations": {
+          "price_check": "price > 0",
+          "stock_check": "stock >= 0"
+        }
+      }
